@@ -1,5 +1,5 @@
 ######################################
-# Counting even in an array on RV32I #
+# Counting even on an array on RV32I #
 # @author: Amadeus Dabela Lanoa      #
 ######################################
 
