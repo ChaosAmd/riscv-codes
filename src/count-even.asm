@@ -23,8 +23,7 @@ main:
 	add  a1, zero, zero             # start a1 as zero hardwired
 	addi a2, zero, 6                # ceil of array
 	add  a3, zero, zero             # counter init
-	jal  euclid_division            # generates the division
-	
+
 euclid_division:
 	beq  a3, a2, finished           # branch to finish loop
 	addi a3, a3, 1                  # add + 1 counter
