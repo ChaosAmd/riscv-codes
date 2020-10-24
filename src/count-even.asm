@@ -29,7 +29,7 @@ euclid_division:
 	addi a3, a3, 1                  # add + 1 counter
 
 quotient:
-	lw   t0, 0(a0)                  # set the t0 the current position
+	lw   t0, 0(a0)                  # set the t0 the current position value
 	add  t1, zero, t0               # set the dividend
 	jal  division_loop              # division label
 	addi a0, a0, 4                  # update current pointer
