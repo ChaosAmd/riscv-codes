@@ -27,9 +27,13 @@ menu:                     # prints the menu
 	la a0, printline
 	jal printstr
 	la a0, exitline
-	jal printstr
-	jal readint       
+	jal printstr      
 
+readint:                  # label to read input from the user to a0
+	li a7, 5
+	ecall
+	ret
+	
 optionmenu:               # process the user input 
 	addi t0, zero, 0
 	beq  a0, t0, exit 
@@ -56,9 +60,6 @@ printstr:                 # auxiliary function to print string loaded to a0
 	ecall
 	ret
 	
-readint:                  # function to read input from the user to a0
-	li a7, 5
-	ecall
-	ret
+
 	
 exit:                     # exits
