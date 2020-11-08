@@ -32,7 +32,6 @@ menu:                     # prints the menu
 readint:                  # label to read input from the user to a0
 	li a7, 5
 	ecall
-	ret
 	
 optionmenu:               # process the user input 
 	addi t0, zero, 0
