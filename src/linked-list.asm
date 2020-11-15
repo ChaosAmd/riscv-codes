@@ -8,7 +8,7 @@ removeindline:		.string "\t 3) Remove por índice na lista\n"
 printline:		.string "\t 4) Imprime lista\n"
 exitline:		.string "\t 0) Sai do programa\n"
 breakln:                .string "\n"
-notimpl:                .string "Não implementadoi!"
+notimpl:                .string "Não implementado!"
 listelsln:              .string "Elementos na lista: "
 space:			.string " "
 
@@ -25,11 +25,11 @@ menu:
 	jal printstr      # prints it
 	la a0, insertline # repeat until line 29
 	jal printstr
-	la a0, printline  # repeat until line 30
-	jal printstr
 	la a0, removevalline
 	jal printstr
 	la a0, removeindline
+	jal printstr
+	la a0, printline  # repeat until line 30
 	jal printstr
 	la a0, exitline
 	jal printstr
@@ -49,14 +49,22 @@ menu:
 
 insertval:
 	jal readint
+	beq s0, sp, insert_at_start # first invariant of the linked list
 	add t0, zero, a0
 	sw t0, 0(sp)
 	addi sp, sp, -4
 	j menu
-	
-###
-# Print List
-###
+
+insert_at_start:
+	add t0, zero, a0            # uses a0(integer red from the keyboard) as argument
+	sw  t0, 0(sp)
+	addi sp, sp, -8
+	sw  zero, -4(sp)
+	j menu
+		
+#############
+# Print List#
+#############
 print_list:
 	jal printbreak
 	la a0, listelsln
@@ -67,7 +75,7 @@ print_list_loop:
 	lw a0, 0(t0) 
 	jal printint
 	jal printspace
-	addi t0, t0, -4
+	addi t0, t0, -8
 	j print_list_loop
 
 rmbyvalue:
