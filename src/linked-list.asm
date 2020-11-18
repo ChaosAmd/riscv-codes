@@ -50,17 +50,36 @@ menu:
 insertval:
 	jal readint
 	beq s0, sp, insert_at_start # first invariant of the linked list
-	add t0, zero, a0
-	sw t0, 0(sp)
-	addi sp, sp, -4
-	j menu
+	b   insert_common           # the second and third invariant
 
-insert_at_start:
-	add t0, zero, a0            # uses a0(integer red from the keyboard) as argument
+insert_at_start:                    # branch for the case that the list is empty
+	add t0, zero, a0            # uses a0(integer read from the keyboard) as argument
 	sw  t0, 0(sp)
-	addi sp, sp, -8
 	sw  zero, -4(sp)
+	addi sp, sp, -8
 	j menu
+	
+insert_common:
+	add t0, zero, a0            # t0 is the the value read by the keyboard
+	lw a1, 0(sp)                # get current node
+	lw a2, -4(sp)               
+	bgt a0, a1, locate_node     # branch locate node
+	jal   node_found              # node was found
+	j menu
+	
+locate_node:
+	lw a1, 0(sp)                # get current node
+	lw a2, -4(sp)               
+	blt a1, a0, insert_common
+	addi sp, sp, -8
+	j locate_node
+	
+node_found:
+	beq a2, zero, last_node
+	add a3, a2, zero            # get previous node
+	sw  
+	
+	ret
 		
 #############
 # Print List#
@@ -81,7 +100,9 @@ print_list_loop:
 rmbyvalue:
 
 rmbyindex:
-### Helpers
+###############################
+#    Helpers  Section         #
+###############################
 readint:                  # label to read input from the user to a0
 	li a7, 5
 	ecall
